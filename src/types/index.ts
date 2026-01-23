@@ -5,7 +5,7 @@ export const projectSchema = object({
   _id: string(),
   projectName: string(),
   clientName: string(),
-  description: string()
+  description: string(),
 })
 
 export const dashboardProjectSchema = array(
@@ -13,15 +13,24 @@ export const dashboardProjectSchema = array(
     _id: true,
     projectName: true,
     clientName: true,
-    description: true
-  })
+    description: true,
+  }),
 )
 export type Project = z.infer<typeof projectSchema>
-export type ProjectFormData = Pick<Project, 'projectName' | 'clientName' | 'description'>
+export type ProjectFormData = Pick<
+  Project,
+  'projectName' | 'clientName' | 'description'
+>
 
 /* Tasks */
 
-export const taskStatusSchema = z.enum(['pending', 'onHold', 'inProgress', 'underReview', 'completed'])
+export const taskStatusSchema = z.enum([
+  'pending',
+  'onHold',
+  'inProgress',
+  'underReview',
+  'completed',
+])
 
 export const taskSchema = object({
   _id: string(),
@@ -30,8 +39,29 @@ export const taskSchema = object({
   project: string(),
   status: taskStatusSchema,
   createdAt: string(),
-  updatedAt: string()
+  updatedAt: string(),
 })
 
 export type Task = z.infer<typeof taskSchema>
 export type TaskFormData = Pick<Task, 'name' | 'description'>
+
+/* Auth & Users */
+
+export const authSchema = object({
+  name: string(),
+  email: string().email(),
+  password: string(),
+  password_confirmation: string(),
+  token: string(),
+})
+
+export type Auth = z.infer<typeof authSchema>
+export type UserLoginForm = Pick<Auth, 'email' | 'password'>
+export type UserRegisterForm = Pick<
+  Auth,
+  'email' | 'name' | 'password' | 'password_confirmation'
+>
+export type ConfirmToken = Pick<Auth, 'token'>
+export type RequestConfirmationCodeForm = Pick<Auth, 'email'>
+export type ForgotPasswordForm = Pick<Auth, 'email'>
+export type NewPasswordForm = Pick<Auth, 'password' | 'password_confirmation'>
