@@ -1,6 +1,7 @@
 import api from '@/lib/axios'
 import { isAxiosError } from 'axios'
 import {
+  userSchema,
   type ConfirmToken,
   type ForgotPasswordForm,
   type NewPasswordForm,
@@ -52,7 +53,10 @@ export const requestConfirmationCode = async (
 export const authenticateUser = async (formData: UserLoginForm) => {
   try {
     const url = '/auth/login'
+    
+    // Get the JWT and save it
     const { data } = await api.post<string>(url, formData)
+    localStorage.setItem('AUTH_TOKEN', data)
     return data
   } catch (error) {
     if (isAxiosError(error) && error.response)
@@ -96,4 +100,17 @@ export const resetPassword = async ({formData, token}: { formData: NewPasswordFo
   }
 }
 
+export const getUser = async () => {
+  try {
+    const url = '/auth/user'
+    const { data } = await api(url)
+    
+    const response = userSchema.safeParse(data)
+    if(response.success) return response.data
 
+  } catch (error) {
+    if(isAxiosError(error) && error.response) {
+      throw new Error(error.response.data)
+    }
+  }
+}

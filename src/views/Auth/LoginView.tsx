@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { type UserLoginForm } from '@/types/index'
 import { ErrorMessage } from '@/components/ErrorMessage'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 import { authenticateUser } from '@/api/authApi'
 import { toast } from 'react-toastify'
@@ -17,13 +17,16 @@ export function LoginView() {
     formState: { errors },
   } = useForm({ defaultValues: initialValues })
 
+  const navigate = useNavigate()
+
   const { mutate } = useMutation({
     mutationFn: authenticateUser,
     onError: (err) => {
       toast.error(err.message)
     },
-    onSuccess: (data) => {
-      toast.success(data)
+    onSuccess: () => {
+      toast.success('Iniciando sesion...')
+      navigate('/')
     }
   })
 
@@ -97,7 +100,7 @@ export function LoginView() {
         <p className='text-center text-gray-300 font-normal'>
           ¿Olvidates tu contraseña?{' '}
           <Link
-            to={'/auth/register'}
+            to={'/auth/forgot-password'}
             className='text-center text-fuchsia-300 font-normal'
           >
             Restablecela aquí

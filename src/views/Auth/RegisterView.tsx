@@ -146,7 +146,7 @@ export function RegisterView() {
         <p className='text-center text-gray-300 font-normal'>
           ¿Olvidates tu contraseña?{' '}
           <Link
-            to={'/auth/register'}
+            to={'/auth/forgot-password'}
             className='text-center text-fuchsia-300 font-normal'
           >
             Restablecela aquí

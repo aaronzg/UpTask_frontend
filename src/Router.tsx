@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AppLayout } from './layouts/AppLayout'
 import { DashboardView } from './views/DashboardView'
-import { CreateProyectView } from './views/proyects/CreateProyectView'
-import { EditProjectView } from './views/proyects/EditProjectView'
-import { ProjectDetailsView } from './views/proyects/ProjectDetailsView'
+import { CreateProyectView } from './views/projects/CreateProjectView'
+import { EditProjectView } from './views/projects/EditProjectView'
+import { ProjectDetailsView } from './views/projects/ProjectDetailsView'
 import { AuthLayout } from './layouts/AuthLayout'
 import { LoginView } from './views/Auth/LoginView'
 import { RegisterView } from './views/Auth/RegisterView'
@@ -11,6 +11,7 @@ import { ConfirmAccountView } from './views/Auth/ConfirmAccountView'
 import { RequestNewCodeView } from './views/Auth/RequestNewCodeView'
 import { ForgotPasswordView } from './views/Auth/ForgotPasswordView'
 import { NewPasswordView } from './views/Auth/NewPasswordView'
+import { ProjectTeamView } from './views/projects/ProjectTeamView'
 
 export default function Router() {
   return (
@@ -25,6 +26,7 @@ export default function Router() {
             element={<EditProjectView />}
           />
           <Route path='/projects/:projectId' element={<ProjectDetailsView />} />
+          <Route path='/projects/:projectId/team' element={<ProjectTeamView />} />
         </Route>
 
         {/* AUTH ROUTES */}
@@ -36,8 +38,11 @@ export default function Router() {
             element={<ConfirmAccountView />}
           />
           <Route path='/auth/request-code' element={<RequestNewCodeView />} />
-          <Route path='/auth/forgot-password' element={<ForgotPasswordView />} />
-          <Route path='/auth/new-password' element={<NewPasswordView />}/>
+          <Route
+            path='/auth/forgot-password'
+            element={<ForgotPasswordView />}
+          />
+          <Route path='/auth/new-password' element={<NewPasswordView />} />
         </Route>
       </Routes>
     </BrowserRouter>
